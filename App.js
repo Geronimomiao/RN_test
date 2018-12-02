@@ -7,8 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ScrollView, Image} from 'react-native';
-
+import {Platform, StyleSheet, Text, View, ScrollView, Image, TabBarIOS} from 'react-native';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -16,81 +15,84 @@ export default class App extends Component<Props> {
     constructor(props) {
         super(props)
         this.state = {
-            hit: false,
-            times: 0
+            selectedTab: 'list'
         }
     }
 
-    timesReset = () => {
-        this.setState({
-            times: 0
-        })
-        console.log(1)
-    }
-
-    willHit = () => {
-        this.setState({
-            hit: !this.state.hit
-        })
-    }
-
-    timesPlus = () => {
-        let times = this.state.times
-        times += 3
-        this.setState({
-            times: times
-        })
-    }
 
     render() {
         return (
-            <View style={styles.container}>
-                {/* 给子组件传递属性和方法 */}
-                {
-                    this.state.hit
-                        ? <Son times={this.state.times} timesReset={this.timesReset}/>
-                        : null
-                }
-                <Text style={styles.welcome} onPress={this.timesReset}>老子心情好 放你一马</Text>
-                <Text style={styles.instructions} onPress={this.willHit}>到底揍不揍</Text>
-                <Text style={styles.instructions} >就揍了你{this.state.times}次而已</Text>
-                <Text style={styles.instructions} onPress={this.timesPlus}>不听话 在揍你3次</Text>
-            </View>
+            <TabBarIOS tintColor="#ee735c">
+                <TabBarIOS.Item
+                    icon={require('./video.png')}
+                    selectedIcon={require('./video.png')}
+                    selected={this.state.selectedTab === 'list'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'list',
+                        });
+                    }}>
+                    <List/>
+                </TabBarIOS.Item>
+                <TabBarIOS.Item
+                    icon={require('./recording.png')}
+                    selectedIcon={require('./recording.png')}
+                    selected={this.state.selectedTab === 'edit'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'edit',
+                        });
+                    }}>
+                    <Edit/>
+                </TabBarIOS.Item>
+                <TabBarIOS.Item
+                    icon={require('./flux.png')}
+                    selectedIcon={require('./flux.png')}
+                    selected={this.state.selectedTab === 'account'}
+                    onPress={() => {
+                        this.setState({
+                            selectedTab: 'account',
+                            presses: this.state.presses + 1
+                        });
+                    }}>
+                    <Account/>
+                </TabBarIOS.Item>
+            </TabBarIOS>
         );
     }
 }
 
-class Son extends Component<Props> {
-
+class List extends Component<Props> {
     constructor(props) {
         super(props)
-        this.state = {
-            times: this.props.times
-        }
-    }
-
-    componentWillReceiveProps(props) {
-        console.log(this.props)
-        console.log('child', 'componentWillReceiveProps')
-        this.setState({
-            times: props.times
-        })
-    }
-
-    timesReset = () => {
-        // 调用父组件传递方法
-        this.props.timesReset()
-        console.log(this.props)
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>儿子：有本事揍我啊</Text>
-                <Text style={styles.instructions}>你居然揍我 {this.state.times} 次</Text>
-                <Text style={styles.instructions} onPress={this.timesReset}>信不信我亲亲你</Text>
+                <Text>列表页面</Text>
             </View>
-        );
+        )
+    }
+}
+
+class Edit extends Component<Props> {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text>制作页面</Text>
+            </View>
+        )
+    }
+}
+
+class Account extends Component<Props> {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text>账户页面</Text>
+            </View>
+        )
     }
 }
 
