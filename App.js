@@ -1,13 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
+/*
+* APP 基本框架
+* */
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, ScrollView, Image, TabBarIOS} from 'react-native';
+const List = require('./app/creation/index')
+const Edit = require('./app/edit/index')
+const Account = require('./app/account/index')
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -18,7 +17,6 @@ export default class App extends Component<Props> {
             selectedTab: 'list'
         }
     }
-
 
     render() {
         return (
@@ -62,56 +60,3 @@ export default class App extends Component<Props> {
     }
 }
 
-class List extends Component<Props> {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>列表页面</Text>
-            </View>
-        )
-    }
-}
-
-class Edit extends Component<Props> {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>制作页面</Text>
-            </View>
-        )
-    }
-}
-
-class Account extends Component<Props> {
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text>账户页面</Text>
-            </View>
-        )
-    }
-}
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-});
